@@ -139,7 +139,7 @@ sequenceDiagram
     participant KB as Knowledge Base
     participant RF as Response Formatter
     
-    U->>S: "What is the difference between DSP and SSP?"
+    U->>S: What is the difference between DSP and SSP?
     S->>A: handle_message()
     A->>SA: process_message()
     
@@ -147,11 +147,11 @@ sequenceDiagram
     SA->>SA: Classify as TEXT message
     
     Note over SA: Intent Recognition
-    SA->>SA: Detect "comparison" intent
+    SA->>SA: Detect comparison intent
     
-    A->>A: _handle_comparison()
-    A->>KB: get_concept("dsp")
-    A->>KB: get_concept("ssp")
+    A->>A: handle_comparison()
+    A->>KB: get_concept(dsp)
+    A->>KB: get_concept(ssp)
     KB-->>A: DSP & SSP concept objects
     
     A->>RF: format_comparison()
@@ -189,13 +189,13 @@ The system doesn't just retrieve static information—it adapts explanations bas
 
 ```mermaid
 flowchart TD
-    A[User Query: "Explain RTB"] --> B[Slack Bot Handler]
+    A["User Query: Explain RTB"] --> B[Slack Bot Handler]
     B --> C[AdTech Teaching Agent]
     C --> D[Strands Agent Processing]
     
     D --> E[Intent Classification]
     E --> F{Query Type?}
-    F -->|Concept Explanation| G[_handle_concept_explanation]
+    F -->|Concept Explanation| G[handle_concept_explanation]
     
     G --> H[Extract Concept Name]
     H --> I{Concept Found?}
@@ -401,29 +401,29 @@ sequenceDiagram
     participant KB as Knowledge Base
     participant QG as Quiz Generator
     
-    S->>SB: "How does RTB work?"
+    S->>SB: How does RTB work?
     SB->>A: handle_message()
     A->>SA: process_message()
     
     Note over SA: Intent: Concept Explanation
-    A->>A: _handle_concept_explanation()
-    A->>KB: get_concept("rtb")
+    A->>A: handle_concept_explanation()
+    A->>KB: get_concept(rtb)
     KB-->>A: RTB concept with details
     
     A->>A: Check user context & level
-    A-->>SB: "RTB happens in ~100ms. Let me break it down..."
+    A-->>SB: RTB happens in ~100ms. Let me break it down...
     SB-->>S: Step-by-step explanation with timeline
     
-    S->>SB: "Show me an example"
+    S->>SB: Show me an example
     SB->>A: handle_example_request()
     A->>KB: get_rtb_examples()
     KB-->>A: Real-world RTB scenarios
     A-->>SB: Netflix, Airbnb case studies
     SB-->>S: Contextual examples with metrics
     
-    S->>SB: "Test my understanding"
+    S->>SB: Test my understanding
     SB->>A: handle_quiz_request()
-    A->>QG: generate_quiz("rtb", user_level)
+    A->>QG: generate_quiz(rtb, user_level)
     QG-->>A: 5 RTB-focused questions
     A-->>SB: Interactive quiz blocks
     SB-->>S: Quiz with immediate feedback
@@ -437,14 +437,14 @@ The system excels at helping students understand relationships between concepts:
 
 ```mermaid
 graph TD
-    A[Student: "DSP vs SSP?"] --> B[Slack Bot Handler]
+    A["Student: DSP vs SSP?"] --> B[Slack Bot Handler]
     B --> C[AdTech Teaching Agent]
-    C --> D[_handle_comparison]
+    C --> D[handle_comparison]
     
     D --> E[Extract Concepts]
     E --> F[Knowledge Base Queries]
-    F --> G[get_concept('dsp')]
-    F --> H[get_concept('ssp')]
+    F --> G[get_concept_dsp]
+    F --> H[get_concept_ssp]
     
     G --> I[DSP Details]
     H --> J[SSP Details]
